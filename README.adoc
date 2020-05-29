@@ -1,0 +1,9 @@
+= Rust Lifetimes
+
+== Creation
+
+[source,bash]
+git submodule add https://github.com/hakimel/reveal.js.git
+cd reveal.js
+git checkout 4.0.1 
+
