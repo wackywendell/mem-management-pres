@@ -1,9 +1,22 @@
 = Rust Lifetimes
+:source-highlighter: highlightjs
+
+== Building
+
+== Installation
+
+Requires docker. On macs, install with
+
+[source,bash]
+brew install docker-machine
+docker-machine create default
+eval $(docker-machine env default)
+
+Then a single `make` command should build.
 
 == Creation
 
 [source,bash]
 git submodule add https://github.com/hakimel/reveal.js.git
 cd reveal.js
-git checkout 4.0.1 
-
+git checkout 3.9.2 
