@@ -1,6 +1,6 @@
 .PHONY: presentation
 
-presentation: html/lifetimes.html
+presentation: docs/mem-management.html
 
-html/lifetimes.html: src/lifetimes.adoc
-	docker run -it -v ${PWD}:/project asciidoctor/docker-asciidoctor asciidoctor-revealjs -a revealjsdir=../reveal.js /project/src/lifetimes.adoc -o /project/html/lifetimes.html
+docs/mem-management.html: src/mem-management.adoc
+	docker run -it -v ${PWD}:/project asciidoctor/docker-asciidoctor asciidoctor-revealjs -a revealjsdir=../reveal.js /project/src/mem-management.adoc -o /project/docs/lifetimes.html
