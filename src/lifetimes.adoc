@@ -1,0 +1,114 @@
+= Memory Management, Scopes, and Variables
+// Put the slide number in the URL
+:revealjs_hash: true
+// Put the slide number in the URL every slide
+:revealjs_history: true
+// Set width and height to be 50% more than normal
+:revealjs_width: 1440
+:revealjs_height: 1050
+:source-highlighter: highlightjs
+:highlightjs-languages: go,python,rust
+
+== What is Memory Management?
+
+=== Definition
+
+[quote, 'Wikipedia, https://en.wikipedia.org/wiki/Memory_management[Memory Management]']
+____
+Memory management is a form of resource management applied to computer memory. The essential requirement of memory management is to provide ways to dynamically allocate portions of memory to programs at their request, and free it for reuse when no longer needed.
+____
+
+=== A Table
+
+// [%noheader,frame="none",grid="none",cols=2*] 
+[%header,frame="none",grid="none",cols=2*a] 
+|===
+| Code
+| Stack
+
+1.3*|
+[source,go]
+----
+func printer(s string) {
+	fmt.Println("Hello, ", s)  // <2>
+}
+
+func main() {
+	fmt.Println("Hello, world!")
+
+	foo := "the variable foo!"
+	printer(foo)  // <1>
+}
+----
+|
+
+
+|===
+
+=== The Stack and the Heap
+
+[source,go]
+----
+func printer(s string) { // <2>
+	fmt.Println("Hello, ", s)
+}
+
+func main() {
+	fmt.Println("Hello, world!")
+
+	foo := "the variable foo!" // <1>
+	printer(foo)
+} // <3>
+----
+
+== Lifetimes
+
+=== Definitions
+
+[quote, Rust By Example, 'https://doc.rust-lang.org/stable/rust-by-example/scope/lifetime.html[Scoping Rules: Lifetimes]']
+____
+A *lifetime* is a construct the compiler (or more specifically, its *borrow checker*) uses to ensure all borrows are valid.
+____
+
+== What is a lifetime?
+
+A lifetime is the *region of code* in which an object is *valid*.
+
+== Region of Code?
+
+_A lifetime is the *region of code* in which an object is *valid*._
+
+// [source,go,linenums,highlight='2;8-10']
+[source,go]
+----
+func printer(s string) { // <2>
+	fmt.Println("Hello, ", s)
+}
+
+func main() {
+	fmt.Println("Hello, world!")
+
+	foo := "the variable foo!" // <1>
+	printer(foo)
+} // <3>
+----
+<1> The lifetime of an object starts when it is created
+<2> A reference to `foo` is passed to `printer`, so its lifetime extends into `printer`
+<3> More
+
+
+
+== Managing Lifetimes: GC
+
+In a language like Python, Go, Java, or any other "garbage-collected" language, the lifetime of an
+
+== Another slide
+
+Rust
+
+[source,rust]
+----
+fn main() {
+    println!("Hello World!")
+}
+----
