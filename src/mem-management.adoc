@@ -6,8 +6,184 @@
 // Set width and height to be 50% more than normal
 :revealjs_width: 1440
 :revealjs_height: 1050
+// :source-highlighter: pygments
 :source-highlighter: highlightjs
-:highlightjs-languages: go,python,rust
+:highlightjs-languages: cpp,go,python,rust
+
+== Memory Basics
+
+=== Values and References
+
+A variable can either be a *value* or a *reference* (also known as a *pointer*).
+
+A *value* variable contains the data and nothing else.
+
+A *reference* variable contains a _memory address_ that says where the memory is. 
+
+Using references allows multiple variables to point to the same data, but adds more complexity: where will that data live? When will it get cleaned up? Are there any data races?
+
+=== Values and References By Language
+
+==== C
+
+In C, references are called pointers and marked with a `*`
+
+// https://cplayground.com/?p=spider-salmon-partridge
+[source,c]
+----
+int x_value = 2;                          // Value
+int* y_ref = (int*) malloc(sizeof(int));  // Reference
+*y_ref = 3000;
+int *x_ref = &x_value;                    // Reference to x_value
+----
+
+==== Go
+
+In Go, pointers are part of the variable type (as in C).
+
+// https://play.golang.org/p/ttxRp98XMqC
+
+[source,go]
+----
+var x_value int = 2;     // Value
+var x_ref *int := &x_value;  // Reference to x_value
+----
+
+==== Python
+
+// Reference: https://docs.python.org/2.0/ref/objects.html
+
+In Python, the distinction between values and references is implicit and less clear.
+
+
+In general, variables containing ``int``s, ``float``s, and ``tuple``s are value
+
+// === By Value
+
+// In Python, integers and floats are _by value_:
+
+// [source,python]
+// ----
+// >>> x = 2
+// >>> y = x
+// >>> y += 1
+// >>> (x, y, x == y)
+// (2, 3, False)
+// ----
+
+// === By Reference
+
+// And ``list``s and ``str``s are _by reference_:
+
+// [source,python]
+// ----
+// >>> x = ['a', 'b']
+// >>> y = x
+// >>> y += ['c']
+// >>> (x, y, x == y)
+// (['a', 'b', 'c'], ['a', 'b', 'c'], True)
+// ----
+
+=== The Stack
+
+=== Example
+
+// [%noheader,frame="none",grid="none",cols=2*] 
+[%header,cols="3a,2a,2a"] 
+|===
+a| Code
+2+a| Stack
+
+1.2+a|
+
+[source,go]
+----
+func printer(x int64, y int64) {
+	fmt.Println(x, y)
+}
+
+func main() {
+	var a int64 = 20
+	var b int64 = 42
+	// Instruction Pointer
+	printer(a * 2, b * 3)
+}
+----
+
+1.2+a| `main`
+| `a` (8 bytes): 20
+| `b` (8 bytes): 42
+
+|===
+
+
+=== Example
+
+// [%noheader,frame="none",grid="none",cols=2*] 
+[%header,cols="3a,2a,2a"] 
+|===
+a| Code
+2+a| Stack
+
+1.4+a|
+
+[source,go]
+----
+func printer(x int64, y int64) {
+	// Instruction Pointer
+	fmt.Println(x, y)
+}
+
+func main() {
+	var a int64 = 20
+	var b int64 = 42
+	// Call Location
+	printer(a * 2, b * 3)
+}
+----
+
+1.2+a| `main`
+| `a` (8 bytes): 20
+| `b` (8 bytes): 42
+
+1.2+a| `printer`
+| `x` (8 bytes): 40
+| `y` (8 bytes): 40
+
+|===
+
+=== The Stack
+
+[%header,frame="none",grid="none",cols=2*a]
+|===
+| The Stack is Great!
+| ... But only for some things
+
+|
+* Only takes up as much memory as is needed
+* No fragmentation
+* Data is deleted immediately after use
+* Easy to implement
+* Easy to code for
+|
+* Can't have variable-sized data: No arrays or hashmaps
+* Can't have two variables referencing the same data
+
+|===
+
+=== The Heap
+
+The Heap
+
+=== Allocation
+
+== Managing the Heap
+
+=== Scoped Cleanup
+
+=== Reference-Counting
+
+=== Garbage Collection
 
 == What is Memory Management?
 
@@ -18,32 +194,6 @@ ____
 Memory management is a form of resource management applied to computer memory. The essential requirement of memory management is to provide ways to dynamically allocate portions of memory to programs at their request, and free it for reuse when no longer needed.
 ____
 
-=== A Table
-
-// [%noheader,frame="none",grid="none",cols=2*] 
-[%header,frame="none",grid="none",cols=2*a] 
-|===
-| Code
-| Stack
-
-1.3*|
-[source,go]
-----
-func printer(s string) {
-	fmt.Println("Hello, ", s)  // <2>
-}
-
-func main() {
-	fmt.Println("Hello, world!")
-
-	foo := "the variable foo!"
-	printer(foo)  // <1>
-}
-----
-|
-
-
-|===
 
 === The Stack and the Heap
 
